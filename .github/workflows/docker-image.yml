@@ -1,0 +1,20 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+   
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: ['alpine3.17', 'alpine3.18', 'bookworm', 'bullseye']
+        gover: ['1.20', '1.21']
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file ${{ matrix.gover }}/${{ matrix.os }}/Dockerfile --tag ghcr.io/kaovilai/golang:${{ matrix.gover }}-${{ matrix.os }} --tag ghcr.io/kaovilai/golang:${{ matrix.gover }}-${{ matrix.os }}-$(date +%s)
