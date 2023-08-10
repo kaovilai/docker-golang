@@ -87,7 +87,7 @@ RUN set -eux; \
 # https://github.com/golang/go/issues/52919; https://github.com/docker-library/golang/pull/426#issuecomment-1152623837
 				export CGO_CFLAGS='-fno-stack-protector'; \
 			fi; \
-			./make.bash; \
+			GOEXPERIMENT=boringcrypto ./make.bash; \
 		); \
 		\
 		apk del --no-network .build-deps; \

@@ -171,7 +171,7 @@ RUN set -eux; \
 				export CGO_CFLAGS='-fno-stack-protector'; \
 			fi; \
 {{ ) else "" end -}}
-			./make.bash; \
+			GOEXPERIMENT=boringcrypto ./make.bash; \
 		); \
 		\
 {{ if is_alpine then ( -}}

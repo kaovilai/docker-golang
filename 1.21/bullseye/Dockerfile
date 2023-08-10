@@ -108,7 +108,7 @@ RUN set -eux; \
 			cd /usr/local/go/src; \
 # set GOROOT_BOOTSTRAP + GOHOST* such that we can build Go successfully
 			export GOROOT_BOOTSTRAP="$(go env GOROOT)" GOHOSTOS="$GOOS" GOHOSTARCH="$GOARCH"; \
-			./make.bash; \
+			GOEXPERIMENT=boringcrypto ./make.bash; \
 		); \
 		\
 		apt-mark auto '.*' > /dev/null; \
