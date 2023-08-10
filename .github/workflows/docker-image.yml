@@ -28,5 +28,5 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file ${{ matrix.gover }}/${{ matrix.os }}/Dockerfile --tag ghcr.io/kaovilai/golang:${{ matrix.gover }}-${{ matrix.os }} --tag ghcr.io/kaovilai/golang:${{ matrix.gover }}-${{ matrix.os }}-$(date +%s)
     - name: Push the Docker image
-      run: docker image push --all-tags ghcr.io/kaovilai/golang:${{ matrix.gover }}-${{ matrix.os }}
+      run: docker image push --all-tags ghcr.io/kaovilai/golang
       
