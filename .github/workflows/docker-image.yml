@@ -10,11 +10,23 @@ jobs:
    
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     strategy:
       matrix:
         os: ['alpine3.17', 'alpine3.18', 'bookworm', 'bullseye']
         gover: ['1.20', '1.21']
     steps:
     - uses: actions/checkout@v3
+    - name: Log in to the Container registry
+      uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build the Docker image
       run: docker build . --file ${{ matrix.gover }}/${{ matrix.os }}/Dockerfile --tag ghcr.io/kaovilai/golang:${{ matrix.gover }}-${{ matrix.os }} --tag ghcr.io/kaovilai/golang:${{ matrix.gover }}-${{ matrix.os }}-$(date +%s)
+    - name: Push the Docker image
+      run: docker image push --all-tags ghcr.io/kaovilai/golang:${{ matrix.gover }}-${{ matrix.os }}
+      
